@@ -150,6 +150,9 @@
         <button id="reset-code" class="px-4 py-1.5 bg-red-600/90 text-white rounded-md hover:bg-red-700 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-900">
           Reset
         </button>
+        <button id="save-file" class="px-4 py-1.5 bg-green-600/90 text-white rounded-md hover:bg-green-700 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+          Save File
+        </button>
         <button id="show-docs" class="px-4 py-1.5 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -439,6 +442,22 @@
       if (e.key === 'Escape' && !docsPopup.classList.contains('hidden')) {
         closeDocsButton.click();
       }
+    });
+
+    const saveFileButton = document.getElementById('save-file');
+
+    // Save file functionality
+    saveFileButton.addEventListener('click', () => {
+      const code = editor.getValue();
+      const blob = new Blob([code], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tailwind-code.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
