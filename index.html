@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind CSS Live Editor</title>
+  <script src="libs/tailwind.min.js"></script>
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="libs/codemirror.min.css">
+  <link rel="stylesheet" href="libs/monokai.min.css">
+  <!-- CodeMirror Core -->
+  <script src="libs/codemirror.min.js"></script>
+  <!-- CodeMirror Addons -->
+  <script src="libs/xml.min.js"></script>
+  <script src="libs/closetag.min.js"></script>
+  <script src="libs/show-hint.min.js"></script>
+  <script src="libs/xml-hint.min.js"></script>
+  <script src="libs/html-hint.min.js"></script>
+  <script src="libs/closebrackets.min.js"></script>
+  <script src="libs/matchbrackets.min.js"></script>
+  <script src="libs/comment.min.js"></script>
+  <script src="libs/active-line.min.js"></script>
+  <script src="libs/xml-fold.min.js"></script>
+  <script src="libs/tailwind.standalone.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {},
+      },
+      plugins: [
+        // Add default plugins
+        function({ addBase, addComponents, addUtilities }) {
+          addUtilities({
+            '.flex': {
+              display: 'flex',
+            },
+            '.items-center': {
+              'align-items': 'center',
+            },
+            '.justify-center': {
+              'justify-content': 'center',
+            },
+            '.justify-between': {
+              'justify-content': 'space-between',
+            },
+            '.grid': {
+              display: 'grid',
+            },
+            '.hidden': {
+              display: 'none',
+            },
+          });
+        }
+      ],
+      corePlugins: {
+        preflight: true,
+        flexbox: true,
+        grid: true,
+        alignItems: true,
+        justifyContent: true,
+        spacing: true,
+        backgroundColor: true,
+        textColor: true,
+      },
+    }
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #editor-container {
+      display: flex;
+      height: calc(100vh - 56px);
+    }
+    .CodeMirror {
+      height: 100%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px;
+      width: 50%; /* Set fixed width */
+    }
+    .CodeMirror-hints {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      z-index: 9999;
+    }
+    #preview {
+      width: 50%;
+      height: 100%;
+      border: none;
+      overflow: auto;
+    }
+    #code-editor {
+      width: 50%;
+    }
+    #header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #334155;
+      color: white;
+      padding: 0 1rem;
+      height: 56px;
+    }
+    #notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      background-color: #10b981;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    /* Reset default styles to ensure Tailwind works properly */
+    *,
+    ::before,
+    ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div id="header">
+    <h1 class="text-xl font-bold">Tailwind CSS Live Editor</h1>
+    <div class="flex gap-2">
+      <button id="copy-code" class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Copy Code</button>
+      <button id="save-code" class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">Save</button>
+      <button id="load-example" class="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm">Load Example</button>
+    </div>
+  </div>
+
+  <div id="editor-container">
+    <div id="code-editor"></div>
+    <iframe id="preview" class="bg-white"></iframe>
+  </div>
+
+  <div id="notification">Copied to clipboard!</div>
+
+  <script>
+    const editor = CodeMirror(document.getElementById('code-editor'), {
+      mode: 'xml',
+      theme: 'monokai',
+      lineNumbers: true,
+      autoCloseTags: true,
+      autoCloseBrackets: {
+        pairs: '()[]{}\'\"', 
+        closeBefore: '})]\'"'
+      },
+      matchBrackets: true,
+      matchTags: {bothTags: true},
+      styleActiveLine: true,
+      indentUnit: 2,
+      tabSize: 2,
+      lineWrapping: true,
+      extraKeys: {
+        // VS Code-like shortcuts
+        'Ctrl-/': 'toggleComment',
+        'Ctrl-Space': 'autocomplete',
+        'Ctrl-S': (cm) => {
+          saveButton.click();
+          return false;
+        },
+        'Ctrl-D': (cm) => {
+          // Multi-cursor selection
+          const word = cm.findWordAt(cm.getCursor());
+          cm.addSelection(word.anchor, word.head);
+          return false;
+        },
+        'Alt-Up': (cm) => {
+          // Move line up
+          const cursor = cm.getCursor();
+          const line = cm.getLine(cursor.line);
+          cm.replaceRange('', {line: cursor.line, ch: 0}, {line: cursor.line + 1, ch: 0});
+          cm.replaceRange(line + '\n', {line: Math.max(cursor.line - 1, 0), ch: 0});
+          cm.setCursor({line: Math.max(cursor.line - 1, 0), ch: cursor.ch});
+        },
+        'Alt-Down': (cm) => {
+          // Move line down
+          const cursor = cm.getCursor();
+          const line = cm.getLine(cursor.line);
+          cm.replaceRange('', {line: cursor.line, ch: 0}, {line: cursor.line + 1, ch: 0});
+          cm.replaceRange(line + '\n', {line: cursor.line + 1, ch: 0});
+          cm.setCursor({line: cursor.line + 1, ch: cursor.ch});
+        },
+        'Ctrl-[': (cm) => {
+          // Outdent
+          cm.execCommand('indentLess');
+        },
+        'Ctrl-]': (cm) => {
+          // Indent
+          cm.execCommand('indentMore');
+        },
+        'Tab': (cm) => {
+          if (cm.somethingSelected()) {
+            cm.execCommand('indentMore');
+          } else {
+            cm.execCommand('insertSoftTab');
+          }
+        },
+        'Shift-Tab': (cm) => {
+          cm.execCommand('indentLess');
+        }
+      },
+      hintOptions: {
+        completeSingle: false,
+        schemaInfo: {
+          'div': {
+            attrs: {
+              'class': null,
+              'id': null
+            }
+          },
+          'button': {
+            attrs: {
+              'class': null,
+              'type': ['button', 'submit', 'reset']
+            }
+          },
+          'input': {
+            attrs: {
+              'class': null,
+              'type': ['text', 'password', 'email', 'number', 'submit', 'reset', 'button', 'checkbox', 'radio']
+            }
+          }
+        }
+      }
+    });
+
+    // Add keyboard shortcut hint to notification
+    const shortcutInfo = document.createElement('div');
+    shortcutInfo.className = 'fixed bottom-4 left-4 text-sm text-gray-600';
+    shortcutInfo.innerHTML = `
+      <div class="bg-white p-2 rounded shadow-md">
+        <div class="font-bold mb-1">Keyboard Shortcuts:</div>
+        <div>Ctrl + / : Toggle Comment</div>
+        <div>Ctrl + Space : Auto-complete</div>
+        <div>Ctrl + S : Save</div>
+        <div>Ctrl + D : Multi-select</div>
+        <div>Alt + ↑/↓ : Move line</div>
+        <div>Ctrl + [/] : De/Indent</div>
+      </div>
+    `;
+    document.body.appendChild(shortcutInfo);
+
+    // Set correct initial size
+    editor.setSize('100%', '100%');
+    
+    const preview = document.getElementById('preview');
+    const copyButton = document.getElementById('copy-code');
+    const saveButton = document.getElementById('save-code');
+    const loadExampleButton = document.getElementById('load-example');
+    const notification = document.getElementById('notification');
+    
+    // Initial example code
+    const initialCode = `<!-- Start typing your Tailwind HTML here -->
+<div class="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8 flex flex-col justify-center">
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div class="md:flex">
+      <div class="md:shrink-0">
+        <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://www.nexus-svnit.in/static/media/nexus.989c35f8cf87c56920da.png" alt="Placeholder image">
+      </div>
+      <div class="p-8">
+        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Tailwind Example</div>
+        <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Create beautiful user interfaces with ease</a>
+        <p class="mt-2 text-gray-500">Tailwind CSS is a utility-first CSS framework that allows you to build modern websites quickly without ever leaving your HTML.</p>
+        <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">Get Started</button>
+      </div>
+    </div>
+  </div>
+</div>`;
+    
+    // Set initial code
+    editor.setValue(initialCode);
+    
+    // Update preview function
+    const updatePreview = () => {
+      try {
+        const code = editor.getValue();
+        const previewDoc = preview.contentDocument;
+        
+        // Ensure iframe is ready
+        if (!previewDoc) return;
+        
+        // Write content with proper DOCTYPE and Tailwind setup
+        previewDoc.open();
+        previewDoc.write(`
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <script>
+    // Configure Tailwind
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {}
+      }
+    }
+  <\/script>
+  <style>
+    body { margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+  ${code}
+</body>
+</html>`);
+        previewDoc.close();
+j
+        // Ensure Tailwind processes the content
+        if (previewDoc.defaultView.tailwind) {
+          setTimeout(() => {
+            previewDoc.defaultView.tailwind.refresh();
+          }, 50);
+        }
+      } catch (err) {
+        console.error('Preview error:', err);
+      }
+    };
+
+    // Wait for iframe to load before initial update
+    preview.addEventListener('load', () => {
+      updatePreview();
+    });
+    
+    // Initial preview update
+    updatePreview();
+    
+    // Update preview debounced to prevent too frequent updates
+    let previewTimeout;
+    editor.on('change', (cm) => {
+      clearTimeout(previewTimeout);
+      previewTimeout = setTimeout(() => {
+        updatePreview();
+        localStorage.setItem(storageKey, cm.getValue());
+      }, 300);
+    });
+    
+    // Copy code functionality
+    copyButton.addEventListener('click', () => {
+      const code = editor.getValue();
+      navigator.clipboard.writeText(code).then(() => {
+        notification.style.opacity = '1';
+        setTimeout(() => {
+          notification.style.opacity = '0';
+        }, 2000);
+      });
+    });
+    
+    // Save code functionality
+    saveButton.addEventListener('click', () => {
+      const code = editor.getValue();
+      const blob = new Blob([code], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tailwind-code.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+    
+    // Load example
+    loadExampleButton.addEventListener('click', () => {
+      const examples = [
+        // Example 1 - Simple Card
+        `<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-bold text-gray-800">Product Card</h2>
+      <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">New</span>
+    </div>
+    <img class="h-48 w-full object-cover rounded-md mb-4" src="https://www.nexus-svnit.in/static/media/nexus.989c35f8cf87c56920da.png" alt="Product image">
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">Premium Headphones</h3>
+    <p class="text-gray-600 mb-4">Experience crystal clear audio with our premium noise-cancelling headphones.</p>
+    <div class="flex items-center justify-between">
+      <span class="text-2xl font-bold text-gray-800">$299</span>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">Add to Cart</button>
+    </div>
+  </div>
+</div>`,
+        // Example 2 - Login Form
+        `<div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+  <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Or
+        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">start your 14-day free trial</a>
+      </p>
+    </div>
+    <form class="mt-8 space-y-6">
+      <div class="rounded-md shadow-sm space-y-4">
+        <div>
+          <label for="email-address" class="sr-only">Email address</label>
+          <input id="email-address" name="email" type="email" autocomplete="email" required
+            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            placeholder="Email address">
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required
+            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            placeholder="Password">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <input id="remember-me" name="remember-me" type="checkbox"
+            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+          <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+            Remember me
+          </label>
+        </div>
+
+        <div class="text-sm">
+          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+            Forgot your password?
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <!-- Heroicon name: solid/lock-closed -->
+            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+            </svg>
+          </span>
+          Sign in
+        </button>
+      </div>
+    </form>
+  </div>
+</div>`,
+        // Example 3 - Pricing Section
+        `<div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+        Simple, transparent pricing
+      </h2>
+      <p class="mt-4 text-xl text-gray-600">
+        Choose the plan that best fits your needs
+      </p>
+    </div>
+
+    <div class="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
+      <!-- Basic Plan -->
+      <div class="border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Basic</h3>
+        <p class="mt-4 text-sm text-gray-500">All the essentials to get started quickly</p>
+        <p class="mt-8">
+          <span class="text-4xl font-extrabold text-gray-900">$9</span>
+          <span class="text-base font-medium text-gray-500">/mo</span>
+        </p>
+        <ul class="mt-6 space-y-4">
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">1 user</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">5GB storage</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">Community support</span>
+          </li>
+        </ul>
+        <button class="mt-8 block w-full bg-gray-800 border border-transparent rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">Buy Basic</button>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="border border-indigo-500 rounded-lg shadow-sm p-6 bg-white relative">
+        <span class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-4 py-1 text-sm rounded-full">Popular</span>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Pro</h3>
+        <p class="mt-4 text-sm text-gray-500">For professional individuals and small teams</p>
+        <p class="mt-8">
+          <span class="text-4xl font-extrabold text-gray-900">$29</span>
+          <span class="text-base font-medium text-gray-500">/mo</span>
+        </p>
+        <ul class="mt-6 space-y-4">
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">5 users</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">50GB storage</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">Priority support</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">Advanced features</span>
+          </li>
+        </ul>
+        <button class="mt-8 block w-full bg-indigo-600 border border-transparent rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-indigo-700">Buy Pro</button>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Enterprise</h3>
+        <p class="mt-4 text-sm text-gray-500">For large teams and organizations</p>
+        <p class="mt-8">
+          <span class="text-4xl font-extrabold text-gray-900">$99</span>
+          <span class="text-base font-medium text-gray-500">/mo</span>
+        </p>
+        <ul class="mt-6 space-y-4">
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">Unlimited users</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">500GB storage</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">Dedicated support</span>
+          </li>
+          <li class="flex items-start">
+            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="ml-3 text-base text-gray-500">Custom integrations</span>
+          </li>
+        </ul>
+        <button class="mt-8 block w-full bg-gray-800 border border-transparent rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</div>`
+      ];
+      
+      const randomExample = examples[Math.floor(Math.random() * examples.length)];
+      editor.setValue(randomExample);
+      updatePreview();
+    });
+    
+    // Handle local storage
+    const storageKey = 'tailwindEditorCode';
+    
+    // Load saved code if exists
+    const savedCode = localStorage.getItem(storageKey);
+    if (savedCode) {
+      editor.setValue(savedCode);
+    }
+  </script>
+</body>
+</html>
