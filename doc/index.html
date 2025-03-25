@@ -372,13 +372,12 @@ code {
 <li><a href="#getting-started">Getting Started</a></li>
 <li><a href="#core-concepts">Core Concepts</a></li>
 <li><a href="#utility-classes">Utility Classes</a></li>
+<li><a href="#colors">Colors</a></li>
+<li><a href="#font-sizes">Font Sizes</a></li>
+<li><a href="#spacing">Spacing</a></li>
 <li><a href="#responsive-design">Responsive Design</a></li>
 <li><a href="#dark-mode">Dark Mode</a></li>
 <li><a href="#customization">Customization</a></li>
-<li><a href="#components">Components</a></li>
-<li><a href="#layout-patterns">Layout Patterns</a></li>
-<li><a href="#performance-optimization">Performance Optimization</a></li>
-<li><a href="#best-practices">Best Practices</a></li>
 <li><a href="#resources">Resources</a></li>
 </ol>
 <h2 id="introduction">Introduction</h2>
@@ -498,167 +497,172 @@ npx tailwindcss init
 <li>Text transform: <code>uppercase</code>, <code>lowercase</code>, <code>capitalize</code>, <code>normal-case</code></li>
 </ul>
 <h3 id="colors">Colors</h3>
-<p>Tailwind provides a comprehensive color palette with various shades:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-blue-500 text-white p-4 border-2 border-blue-700"</span>&gt;</span>
-  A blue container with white text
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Colors can be applied to various properties:</p>
-<ul>
-<li>Background: <code>bg-{color}-{shade}</code></li>
-<li>Text: <code>text-{color}-{shade}</code></li>
-<li>Border: <code>border-{color}-{shade}</code></li>
-<li>Placeholder: <code>placeholder-{color}-{shade}</code></li>
-<li>Gradient: <code>from-{color}-{shade}</code>, <code>via-{color}-{shade}</code>, <code>to-{color}-{shade}</code></li>
-</ul>
-<p>Default color palette includes:</p>
-<ul>
-<li>Gray, Red, Yellow, Green, Blue, Indigo, Purple, Pink, and more</li>
-<li>Each color has shades from 50 (lightest) to 900 (darkest)</li>
-</ul>
-<h3 id="spacing-and-sizing">Spacing and Sizing</h3>
-<p>Control margins, padding, width, and height:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"m-4 p-6 w-1/2 h-32"</span>&gt;</span>
-  Element with margin, padding, width, and height
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Spacing scale applies to margin (<code>m-*</code>) and padding (<code>p-*</code>):</p>
-<ul>
-<li><code>m-0</code>, <code>m-0.5</code>, <code>m-1</code>, <code>m-1.5</code>, <code>m-2</code>, <code>m-2.5</code>, <code>m-3</code>, <code>m-3.5</code>, <code>m-4</code>...</li>
-<li>Can be directional: <code>mt-</code> (top), <code>mr-</code> (right), <code>mb-</code> (bottom), <code>ml-</code> (left), <code>mx-</code> (horizontal), <code>my-</code> (vertical)</li>
-</ul>
-<p>Width and height utilities:</p>
-<ul>
-<li>Fixed sizes: <code>w-0</code>, <code>w-px</code>, <code>w-1</code>, <code>w-2</code>...</li>
-<li>Percentages: <code>w-1/2</code>, <code>w-1/3</code>, <code>w-2/3</code>, <code>w-1/4</code>, <code>w-3/4</code>...</li>
-<li>Full viewport: <code>w-screen</code>, <code>h-screen</code></li>
-<li>Full element: <code>w-full</code>, <code>h-full</code></li>
-<li>Auto: <code>w-auto</code>, <code>h-auto</code></li>
-<li>Min/Max: <code>min-w-0</code>, <code>min-w-full</code>, <code>max-w-xs</code>, <code>max-w-sm</code>...</li>
-</ul>
-<h3 id="flexbox-and-grid">Flexbox and Grid</h3>
-<p>Powerful layout utilities for building complex interfaces:</p>
-<p><strong>Flexbox Example:</strong></p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex flex-row items-center justify-between space-x-4"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Item 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Item 2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Item 3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Key flexbox utilities:</p>
-<ul>
-<li><code>flex</code>: Enable flexbox</li>
-<li><code>flex-row</code>, <code>flex-col</code>: Direction</li>
-<li><code>flex-wrap</code>, <code>flex-nowrap</code>: Wrapping behavior</li>
-<li><code>items-start</code>, <code>items-center</code>, <code>items-end</code>: Align items</li>
-<li><code>justify-start</code>, <code>justify-center</code>, <code>justify-end</code>, <code>justify-between</code>, <code>justify-around</code>: Justify content</li>
-<li><code>space-x-{size}</code>, <code>space-y-{size}</code>: Gap between items</li>
-</ul>
-<p><strong>Grid Example:</strong></p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"grid grid-cols-3 gap-4"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 4<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 5<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 6<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Key grid utilities:</p>
-<ul>
-<li><code>grid</code>: Enable grid</li>
-<li><code>grid-cols-{n}</code>: Number of columns</li>
-<li><code>grid-rows-{n}</code>: Number of rows</li>
-<li><code>gap-{size}</code>, <code>gap-x-{size}</code>, <code>gap-y-{size}</code>: Gap between items</li>
-<li><code>col-span-{n}</code>: Span n columns</li>
-<li><code>row-span-{n}</code>: Span n rows</li>
-<li><code>col-start-{n}</code>, <code>row-start-{n}</code>: Start position</li>
-</ul>
-<h3 id="positioning">Positioning</h3>
-<p>Control how elements are positioned:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"relative h-32 w-32 bg-gray-200"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"absolute top-0 right-0 h-16 w-16 bg-blue-500"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Positioning utilities:</p>
-<ul>
-<li><code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code></li>
-<li><code>top-{size}</code>, <code>right-{size}</code>, <code>bottom-{size}</code>, <code>left-{size}</code>: Position offsets</li>
-<li><code>z-{index}</code>: Z-index control</li>
-</ul>
-<h3 id="background-and-borders">Background and Borders</h3>
-<p>Style element backgrounds and borders:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-lg shadow-lg border border-purple-700"</span>&gt;</span>
-  Element with gradient background, rounded corners, shadow, and border
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Background utilities:</p>
-<ul>
-<li><code>bg-{color}-{shade}</code>: Background color</li>
-<li><code>bg-opacity-{percentage}</code>: Background opacity</li>
-<li><code>bg-gradient-to-{direction}</code>: Gradient direction</li>
-<li><code>from-{color}-{shade}</code>, <code>via-{color}-{shade}</code>, <code>to-{color}-{shade}</code>: Gradient colors</li>
-<li><code>bg-repeat</code>, <code>bg-no-repeat</code>, <code>bg-repeat-x</code>, <code>bg-repeat-y</code>: Background repeat</li>
-<li><code>bg-cover</code>, <code>bg-contain</code>: Background size</li>
-</ul>
-<p>Border utilities:</p>
-<ul>
-<li><code>border</code>, <code>border-{size}</code>: Border width</li>
-<li><code>border-{color}-{shade}</code>: Border color</li>
-<li><code>border-opacity-{percentage}</code>: Border opacity</li>
-<li><code>border-{side}</code>: Side-specific borders (top, right, bottom, left)</li>
-<li><code>rounded</code>, <code>rounded-{size}</code>: Border radius</li>
-<li><code>rounded-{position}</code>: Position-specific radius (tl, tr, bl, br)</li>
-</ul>
-<h3 id="effects">Effects</h3>
-<p>Add shadows, opacity, and other visual effects:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"shadow-xl opacity-75 blur-sm transition-all duration-300 ease-in-out hover:opacity-100 hover:blur-none"</span>&gt;</span>
-  Element with shadow, opacity, blur, and transition
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<p>Effect utilities:</p>
-<ul>
-<li><code>shadow</code>, <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>: Box shadows</li>
-<li><code>opacity-{percentage}</code>: Element opacity</li>
-<li><code>blur-{amount}</code>, <code>brightness-{amount}</code>, <code>contrast-{amount}</code>: Filters</li>
-<li><code>transition</code>, <code>transition-{property}</code>: Enable transitions</li>
-<li><code>duration-{time}</code>: Transition duration</li>
-<li><code>ease-{timing}</code>: Transition timing function</li>
-</ul>
+<p>Tailwind provides a comprehensive color palette. Below is a table showcasing the default colors with their shades and actual color display.</p>
+<table>
+<thead>
+<tr>
+<th>Color Name</th>
+<th>Shade</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gray</td>
+<td>50</td>
+<td><div style="background-color: #f9fafb; width: 50px; height: 20px; display: inline-block;"></div> <code>#f9fafb</code></td>
+</tr>
+<tr>
+<td>Gray</td>
+<td>100</td>
+<td><div style="background-color: #f3f4f6; width: 50px; height: 20px; display: inline-block;"></div> <code>#f3f4f6</code></td>
+</tr>
+<tr>
+<td>Gray</td>
+<td>200</td>
+<td><div style="background-color: #e5e7eb; width: 50px; height: 20px; display: inline-block;"></div> <code>#e5e7eb</code></td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>500</td>
+<td><div style="background-color: #3b82f6; width: 50px; height: 20px; display: inline-block;"></div> <code>#3b82f6</code></td>
+</tr>
+<tr>
+<td>Red</td>
+<td>500</td>
+<td><div style="background-color: #ef4444; width: 50px; height: 20px; display: inline-block;"></div> <code>#ef4444</code></td>
+</tr>
+<tr>
+<td>Green</td>
+<td>500</td>
+<td><div style="background-color: #10b981; width: 50px; height: 20px; display: inline-block;"></div> <code>#10b981</code></td>
+</tr>
+</tbody>
+</table>
+<p>For the full palette, refer to the <a href="https://tailwindcss.com/docs/customizing-colors">Tailwind CSS Color Documentation</a>.</p>
+<hr>
+<h2 id="font-sizes">Font Sizes</h2>
+<p>Tailwind provides a range of font sizes. Below is a table with examples:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Font Size</th>
+<th>Example Text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text-xs</code></td>
+<td>0.75rem</td>
+<td><span style="font-size: 0.75rem;">Extra Small Text</span></td>
+</tr>
+<tr>
+<td><code>text-sm</code></td>
+<td>0.875rem</td>
+<td><span style="font-size: 0.875rem;">Small Text</span></td>
+</tr>
+<tr>
+<td><code>text-base</code></td>
+<td>1rem</td>
+<td><span style="font-size: 1rem;">Base Text</span></td>
+</tr>
+<tr>
+<td><code>text-lg</code></td>
+<td>1.125rem</td>
+<td><span style="font-size: 1.125rem;">Large Text</span></td>
+</tr>
+<tr>
+<td><code>text-xl</code></td>
+<td>1.25rem</td>
+<td><span style="font-size: 1.25rem;">Extra Large Text</span></td>
+</tr>
+<tr>
+<td><code>text-2xl</code></td>
+<td>1.5rem</td>
+<td><span style="font-size: 1.5rem;">2XL Text</span></td>
+</tr>
+<tr>
+<td><code>text-3xl</code></td>
+<td>1.875rem</td>
+<td><span style="font-size: 1.875rem;">3XL Text</span></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="spacing">Spacing</h2>
+<p>Tailwind's spacing utilities control padding, margin, and gap. Below is a table with examples:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Value</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>p-0</code></td>
+<td>0px</td>
+<td>Padding: 0px</td>
+</tr>
+<tr>
+<td><code>p-4</code></td>
+<td>1rem</td>
+<td>Padding: 1rem</td>
+</tr>
+<tr>
+<td><code>m-2</code></td>
+<td>0.5rem</td>
+<td>Margin: 0.5rem</td>
+</tr>
+<tr>
+<td><code>gap-6</code></td>
+<td>1.5rem</td>
+<td>Gap: 1.5rem</td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h2 id="responsive-design">Responsive Design</h2>
-<p>Tailwind makes responsive design intuitive with breakpoint prefixes:</p>
-<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6"</span>&gt;</span>
-  Responsive width element
+<p>Tailwind's responsive utilities allow you to apply styles at specific breakpoints. Below are examples:</p>
+<table>
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Prefix</th>
+<th>Min Width</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sm</code></td>
+<td><code>sm:</code></td>
+<td>640px</td>
+</tr>
+<tr>
+<td><code>md</code></td>
+<td><code>md:</code></td>
+<td>768px</td>
+</tr>
+<tr>
+<td><code>lg</code></td>
+<td><code>lg:</code></td>
+<td>1024px</td>
+</tr>
+<tr>
+<td><code>xl</code></td>
+<td><code>xl:</code></td>
+<td>1280px</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"</span>&gt;</span>
+  Responsive Text
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </div></code></pre>
-<p>Default breakpoints:</p>
-<ul>
-<li><code>sm</code>: 640px and above</li>
-<li><code>md</code>: 768px and above</li>
-<li><code>lg</code>: 1024px and above</li>
-<li><code>xl</code>: 1280px and above</li>
-<li><code>2xl</code>: 1536px and above</li>
-</ul>
-<p>All utility classes can be prefixed with these breakpoints to apply at specific screen sizes.</p>
-<h3 id="mobile-first-approach">Mobile-First Approach</h3>
-<p>Tailwind uses a mobile-first approach, meaning:</p>
-<ul>
-<li>Unprefixed utilities apply to all screen sizes</li>
-<li>Prefixed utilities apply at their breakpoint and above</li>
-<li>To target only mobile, use utilities without breakpoint prefixes and override them at larger sizes</li>
-</ul>
-<h3 id="customizing-breakpoints">Customizing Breakpoints</h3>
-<pre class="hljs"><code><div><span class="hljs-comment">// tailwind.config.js</span>
-<span class="hljs-built_in">module</span>.exports = {
-  <span class="hljs-attr">theme</span>: {
-    <span class="hljs-attr">screens</span>: {
-      <span class="hljs-string">'tablet'</span>: <span class="hljs-string">'640px'</span>,
-      <span class="hljs-string">'laptop'</span>: <span class="hljs-string">'1024px'</span>,
-      <span class="hljs-string">'desktop'</span>: <span class="hljs-string">'1280px'</span>,
-    },
-  },
-}
-</div></code></pre>
+<hr>
 <h2 id="dark-mode">Dark Mode</h2>
 <p>Tailwind provides built-in support for dark mode:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-white dark:bg-gray-800 text-gray-900 dark:text-white"</span>&gt;</span>
@@ -1023,21 +1027,15 @@ npx tailwindcss init
 <li><strong>Neglecting Dark Mode</strong>: Design for both light and dark themes from the start.</li>
 </ol>
 <h2 id="resources">Resources</h2>
-<h3 id="official-resources">Official Resources</h3>
 <ul>
 <li><a href="https://tailwindcss.com/docs">Tailwind CSS Documentation</a></li>
-<li><a href="https://tailwindui.com">Tailwind UI</a> (Premium component library)</li>
-<li><a href="https://play.tailwindcss.com">Tailwind CSS Play</a> (Online playground)</li>
-<li><a href="https://github.com/tailwindlabs/tailwindcss">Tailwind CSS GitHub Repository</a></li>
+<li><a href="https://tailwindcss.com/docs/customizing-colors">Tailwind CSS Color Palette</a></li>
+<li><a href="https://tailwindcss.com/docs/typography-plugin">Tailwind CSS Typography</a></li>
 </ul>
-<h3 id="community-resources">Community Resources</h3>
-<ul>
-<li><a href="https://github.com/aniftyco/awesome-tailwindcss">Awesome Tailwind CSS</a> (A curated list of resources)</li>
-<li><a href="https://tailwindcomponents.com">Tailwind Components</a> (Community components)</li>
-<li><a href="https://daisyui.com">DaisyUI</a> (Component library built on Tailwind)</li>
-<li><a href="https://headlessui.dev">Headless UI</a> (Unstyled, accessible components)</li>
-<li><a href="https://www.tailwindtoolbox.com">Tailwind Toolbox</a> (Templates and components)</li>
-</ul>
+<hr>
+<footer>
+  <p style="text-align: center; font-size: 0.9rem; color: gray;">Prepared by Team Nexus</p>
+</footer>
 
 </body>
 </html>

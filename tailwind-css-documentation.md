@@ -5,14 +5,13 @@
 2. [Getting Started](#getting-started)
 3. [Core Concepts](#core-concepts)
 4. [Utility Classes](#utility-classes)
-5. [Responsive Design](#responsive-design)
-6. [Dark Mode](#dark-mode)
-7. [Customization](#customization)
-8. [Components](#components)
-9. [Layout Patterns](#layout-patterns)
-10. [Performance Optimization](#performance-optimization)
-11. [Best Practices](#best-practices)
-12. [Resources](#resources)
+5. [Colors](#colors)
+6. [Font Sizes](#font-sizes)
+7. [Spacing](#spacing)
+8. [Responsive Design](#responsive-design)
+9. [Dark Mode](#dark-mode)
+10. [Customization](#customization)
+11. [Resources](#resources)
 
 ## Introduction
 
@@ -164,188 +163,69 @@ Key typography classes:
 
 ### Colors
 
-Tailwind provides a comprehensive color palette with various shades:
+Tailwind provides a comprehensive color palette. Below is a table showcasing the default colors with their shades and actual color display.
 
-```html
-<div class="bg-blue-500 text-white p-4 border-2 border-blue-700">
-  A blue container with white text
-</div>
-```
+| Color Name | Shade | Example |
+|------------|-------|---------|
+| Gray       | 50    | <div style="background-color: #f9fafb; width: 50px; height: 20px; display: inline-block;"></div> `#f9fafb` |
+| Gray       | 100   | <div style="background-color: #f3f4f6; width: 50px; height: 20px; display: inline-block;"></div> `#f3f4f6` |
+| Gray       | 200   | <div style="background-color: #e5e7eb; width: 50px; height: 20px; display: inline-block;"></div> `#e5e7eb` |
+| Blue       | 500   | <div style="background-color: #3b82f6; width: 50px; height: 20px; display: inline-block;"></div> `#3b82f6` |
+| Red        | 500   | <div style="background-color: #ef4444; width: 50px; height: 20px; display: inline-block;"></div> `#ef4444` |
+| Green      | 500   | <div style="background-color: #10b981; width: 50px; height: 20px; display: inline-block;"></div> `#10b981` |
 
-Colors can be applied to various properties:
-- Background: `bg-{color}-{shade}`
-- Text: `text-{color}-{shade}`
-- Border: `border-{color}-{shade}`
-- Placeholder: `placeholder-{color}-{shade}`
-- Gradient: `from-{color}-{shade}`, `via-{color}-{shade}`, `to-{color}-{shade}`
+For the full palette, refer to the [Tailwind CSS Color Documentation](https://tailwindcss.com/docs/customizing-colors).
 
-Default color palette includes:
-- Gray, Red, Yellow, Green, Blue, Indigo, Purple, Pink, and more
-- Each color has shades from 50 (lightest) to 900 (darkest)
+---
 
-### Spacing and Sizing
+## Font Sizes
 
-Control margins, padding, width, and height:
+Tailwind provides a range of font sizes. Below is a table with examples:
 
-```html
-<div class="m-4 p-6 w-1/2 h-32">
-  Element with margin, padding, width, and height
-</div>
-```
+| Class       | Font Size | Example Text |
+|-------------|-----------|--------------|
+| `text-xs`   | 0.75rem   | <span style="font-size: 0.75rem;">Extra Small Text</span> |
+| `text-sm`   | 0.875rem  | <span style="font-size: 0.875rem;">Small Text</span> |
+| `text-base` | 1rem      | <span style="font-size: 1rem;">Base Text</span> |
+| `text-lg`   | 1.125rem  | <span style="font-size: 1.125rem;">Large Text</span> |
+| `text-xl`   | 1.25rem   | <span style="font-size: 1.25rem;">Extra Large Text</span> |
+| `text-2xl`  | 1.5rem    | <span style="font-size: 1.5rem;">2XL Text</span> |
+| `text-3xl`  | 1.875rem  | <span style="font-size: 1.875rem;">3XL Text</span> |
 
-Spacing scale applies to margin (`m-*`) and padding (`p-*`):
-- `m-0`, `m-0.5`, `m-1`, `m-1.5`, `m-2`, `m-2.5`, `m-3`, `m-3.5`, `m-4`...
-- Can be directional: `mt-` (top), `mr-` (right), `mb-` (bottom), `ml-` (left), `mx-` (horizontal), `my-` (vertical)
+---
 
-Width and height utilities:
-- Fixed sizes: `w-0`, `w-px`, `w-1`, `w-2`...
-- Percentages: `w-1/2`, `w-1/3`, `w-2/3`, `w-1/4`, `w-3/4`...
-- Full viewport: `w-screen`, `h-screen`
-- Full element: `w-full`, `h-full`
-- Auto: `w-auto`, `h-auto`
-- Min/Max: `min-w-0`, `min-w-full`, `max-w-xs`, `max-w-sm`...
+## Spacing
 
-### Flexbox and Grid
+Tailwind's spacing utilities control padding, margin, and gap. Below is a table with examples:
 
-Powerful layout utilities for building complex interfaces:
+| Class       | Value   | Example |
+|-------------|---------|---------|
+| `p-0`       | 0px     | Padding: 0px |
+| `p-4`       | 1rem    | Padding: 1rem |
+| `m-2`       | 0.5rem  | Margin: 0.5rem |
+| `gap-6`     | 1.5rem  | Gap: 1.5rem |
 
-**Flexbox Example:**
-```html
-<div class="flex flex-row items-center justify-between space-x-4">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-</div>
-```
-
-Key flexbox utilities:
-- `flex`: Enable flexbox
-- `flex-row`, `flex-col`: Direction
-- `flex-wrap`, `flex-nowrap`: Wrapping behavior
-- `items-start`, `items-center`, `items-end`: Align items
-- `justify-start`, `justify-center`, `justify-end`, `justify-between`, `justify-around`: Justify content
-- `space-x-{size}`, `space-y-{size}`: Gap between items
-
-**Grid Example:**
-```html
-<div class="grid grid-cols-3 gap-4">
-  <div>Grid Item 1</div>
-  <div>Grid Item 2</div>
-  <div>Grid Item 3</div>
-  <div>Grid Item 4</div>
-  <div>Grid Item 5</div>
-  <div>Grid Item 6</div>
-</div>
-```
-
-Key grid utilities:
-- `grid`: Enable grid
-- `grid-cols-{n}`: Number of columns
-- `grid-rows-{n}`: Number of rows
-- `gap-{size}`, `gap-x-{size}`, `gap-y-{size}`: Gap between items
-- `col-span-{n}`: Span n columns
-- `row-span-{n}`: Span n rows
-- `col-start-{n}`, `row-start-{n}`: Start position
-
-### Positioning
-
-Control how elements are positioned:
-
-```html
-<div class="relative h-32 w-32 bg-gray-200">
-  <div class="absolute top-0 right-0 h-16 w-16 bg-blue-500"></div>
-</div>
-```
-
-Positioning utilities:
-- `static`, `relative`, `absolute`, `fixed`, `sticky`
-- `top-{size}`, `right-{size}`, `bottom-{size}`, `left-{size}`: Position offsets
-- `z-{index}`: Z-index control
-
-### Background and Borders
-
-Style element backgrounds and borders:
-
-```html
-<div class="bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-lg shadow-lg border border-purple-700">
-  Element with gradient background, rounded corners, shadow, and border
-</div>
-```
-
-Background utilities:
-- `bg-{color}-{shade}`: Background color
-- `bg-opacity-{percentage}`: Background opacity
-- `bg-gradient-to-{direction}`: Gradient direction
-- `from-{color}-{shade}`, `via-{color}-{shade}`, `to-{color}-{shade}`: Gradient colors
-- `bg-repeat`, `bg-no-repeat`, `bg-repeat-x`, `bg-repeat-y`: Background repeat
-- `bg-cover`, `bg-contain`: Background size
-
-Border utilities:
-- `border`, `border-{size}`: Border width
-- `border-{color}-{shade}`: Border color
-- `border-opacity-{percentage}`: Border opacity
-- `border-{side}`: Side-specific borders (top, right, bottom, left)
-- `rounded`, `rounded-{size}`: Border radius
-- `rounded-{position}`: Position-specific radius (tl, tr, bl, br)
-
-### Effects
-
-Add shadows, opacity, and other visual effects:
-
-```html
-<div class="shadow-xl opacity-75 blur-sm transition-all duration-300 ease-in-out hover:opacity-100 hover:blur-none">
-  Element with shadow, opacity, blur, and transition
-</div>
-```
-
-Effect utilities:
-- `shadow`, `shadow-md`, `shadow-lg`, `shadow-xl`: Box shadows
-- `opacity-{percentage}`: Element opacity
-- `blur-{amount}`, `brightness-{amount}`, `contrast-{amount}`: Filters
-- `transition`, `transition-{property}`: Enable transitions
-- `duration-{time}`: Transition duration
-- `ease-{timing}`: Transition timing function
+---
 
 ## Responsive Design
 
-Tailwind makes responsive design intuitive with breakpoint prefixes:
+Tailwind's responsive utilities allow you to apply styles at specific breakpoints. Below are examples:
 
+| Breakpoint | Prefix | Min Width |
+|------------|--------|-----------|
+| `sm`       | `sm:`  | 640px     |
+| `md`       | `md:`  | 768px     |
+| `lg`       | `lg:`  | 1024px    |
+| `xl`       | `xl:`  | 1280px    |
+
+Example:
 ```html
-<div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
-  Responsive width element
+<div class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+  Responsive Text
 </div>
 ```
 
-Default breakpoints:
-- `sm`: 640px and above
-- `md`: 768px and above
-- `lg`: 1024px and above
-- `xl`: 1280px and above
-- `2xl`: 1536px and above
-
-All utility classes can be prefixed with these breakpoints to apply at specific screen sizes.
-
-### Mobile-First Approach
-
-Tailwind uses a mobile-first approach, meaning:
-- Unprefixed utilities apply to all screen sizes
-- Prefixed utilities apply at their breakpoint and above
-- To target only mobile, use utilities without breakpoint prefixes and override them at larger sizes
-
-### Customizing Breakpoints
-
-```javascript
-// tailwind.config.js
-module.exports = {
-  theme: {
-    screens: {
-      'tablet': '640px',
-      'laptop': '1024px',
-      'desktop': '1280px',
-    },
-  },
-}
-```
+---
 
 ## Dark Mode
 
@@ -781,17 +661,12 @@ src/
 
 ## Resources
 
-### Official Resources
-
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Tailwind UI](https://tailwindui.com) (Premium component library)
-- [Tailwind CSS Play](https://play.tailwindcss.com) (Online playground)
-- [Tailwind CSS GitHub Repository](https://github.com/tailwindlabs/tailwindcss)
+- [Tailwind CSS Color Palette](https://tailwindcss.com/docs/customizing-colors)
+- [Tailwind CSS Typography](https://tailwindcss.com/docs/typography-plugin)
 
-### Community Resources
+---
 
-- [Awesome Tailwind CSS](https://github.com/aniftyco/awesome-tailwindcss) (A curated list of resources)
-- [Tailwind Components](https://tailwindcomponents.com) (Community components)
-- [DaisyUI](https://daisyui.com) (Component library built on Tailwind)
-- [Headless UI](https://headlessui.dev) (Unstyled, accessible components)
-- [Tailwind Toolbox](https://www.tailwindtoolbox.com) (Templates and components)
+<footer>
+  <p style="text-align: center; font-size: 0.9rem; color: gray;">Prepared by Team Nexus</p>
+</footer>
