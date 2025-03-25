@@ -4,23 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tailwind CSS Live Editor</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.3.3/tailwind.min.js"></script>
-  <!-- Add CodeMirror CSS and dependencies -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/monokai.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/xml/xml.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closetag.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/xml-hint.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/html-hint.min.js"></script>
-  <!-- Add additional CodeMirror addons -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closebrackets.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/matchbrackets.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/comment/comment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/selection/active-line.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/fold/xml-fold.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="libs/tailwind.min.js"></script>
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="libs/codemirror.min.css">
+  <link rel="stylesheet" href="libs/monokai.min.css">
+  <!-- CodeMirror Core -->
+  <script src="libs/codemirror.min.js"></script>
+  <!-- CodeMirror Addons -->
+  <script src="libs/xml.min.js"></script>
+  <script src="libs/closetag.min.js"></script>
+  <script src="libs/show-hint.min.js"></script>
+  <script src="libs/xml-hint.min.js"></script>
+  <script src="libs/html-hint.min.js"></script>
+  <script src="libs/closebrackets.min.js"></script>
+  <script src="libs/matchbrackets.min.js"></script>
+  <script src="libs/comment.min.js"></script>
+  <script src="libs/active-line.min.js"></script>
+  <script src="libs/xml-fold.min.js"></script>
+  <script src="libs/tailwind.standalone.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -104,9 +105,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #334155;
       color: white;
-      padding: 0 1rem;
       height: 56px;
     }
     #notification {
@@ -133,12 +132,31 @@
   </style>
 </head>
 <body class="bg-gray-100">
-  <div id="header">
-    <h1 class="text-xl font-bold">Tailwind CSS Live Editor</h1>
-    <div class="flex gap-2">
-      <button id="copy-code" class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Copy Code</button>
-      <button id="save-code" class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">Save</button>
-      <button id="load-example" class="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm">Load Example</button>
+  <div id="header" class="bg-gradient-to-r from-slate-800 to-slate-900 shadow-lg">
+    <div class="container mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+          <h1 class="text-xl font-bold ml-2 text-white">Tailwind Editor</h1>
+        </div>
+        <div class="hidden md:flex space-x-1">
+          <span class="px-2 py-1 text-xs text-blue-200 bg-blue-900/30 rounded-full font-medium">Live Preview</span>
+          <span class="px-2 py-1 text-xs text-emerald-200 bg-emerald-900/30 rounded-full font-medium">Auto-Save</span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button id="reset-code" class="px-4 py-1.5 bg-red-600/90 text-white rounded-md hover:bg-red-700 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+          Reset
+        </button>
+        <button id="show-docs" class="px-4 py-1.5 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <span>Docs</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -148,6 +166,23 @@
   </div>
 
   <div id="notification">Copied to clipboard!</div>
+
+  <!-- Add documentation popup -->
+  <div id="docs-popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white w-11/12 h-5/6 max-w-6xl rounded-lg shadow-xl flex flex-col">
+      <div class="flex justify-between items-center p-4 border-b">
+        <h2 class="text-xl font-bold">Tailwind CSS Documentation</h2>
+        <button id="close-docs" class="text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex-1 overflow-auto p-6">
+        <iframe id="docs-frame" src="doc/index.html" class="w-full h-full border-0"></iframe>
+      </div>
+    </div>
+  </div>
 
   <script>
     const editor = CodeMirror(document.getElementById('code-editor'), {
@@ -243,8 +278,13 @@
     const shortcutInfo = document.createElement('div');
     shortcutInfo.className = 'fixed bottom-4 left-4 text-sm text-gray-600';
     shortcutInfo.innerHTML = `
-      <div class="bg-white p-2 rounded shadow-md">
-        <div class="font-bold mb-1">Keyboard Shortcuts:</div>
+      <div class="bg-white p-4 rounded shadow-md relative">
+        <button id="close-shortcuts" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div class="font-bold mb-2">Keyboard Shortcuts:</div>
         <div>Ctrl + / : Toggle Comment</div>
         <div>Ctrl + Space : Auto-complete</div>
         <div>Ctrl + S : Save</div>
@@ -255,13 +295,16 @@
     `;
     document.body.appendChild(shortcutInfo);
 
+    // Add event listener for closing shortcuts
+    document.getElementById('close-shortcuts').addEventListener('click', () => {
+      shortcutInfo.remove();
+    });
+
     // Set correct initial size
     editor.setSize('100%', '100%');
     
     const preview = document.getElementById('preview');
-    const copyButton = document.getElementById('copy-code');
-    const saveButton = document.getElementById('save-code');
-    const loadExampleButton = document.getElementById('load-example');
+    const resetButton = document.getElementById('reset-code');
     const notification = document.getElementById('notification');
     
     // Initial example code
@@ -269,10 +312,10 @@
 <div class="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8 flex flex-col justify-center">
   <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
     <div class="md:flex">
-      <div class="md:shrink-0">
-        <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://www.nexus-svnit.in/static/media/nexus.989c35f8cf87c56920da.png" alt="Placeholder image">
+      <div class="min-w-fit p-4 flex justify-center items-center">
+        <img class="w-48 object-cover h-48 md:w-48" src="assets/img/nexus-logo.png" alt="Placeholder image">
       </div>
-      <div class="p-8">
+      <div class="p-4">
         <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Tailwind Example</div>
         <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Create beautiful user interfaces with ease</a>
         <p class="mt-2 text-gray-500">Tailwind CSS is a utility-first CSS framework that allows you to build modern websites quickly without ever leaving your HTML.</p>
@@ -302,7 +345,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"><\/script>
+  <script src="libs/tailwind.standalone.min.js"><\/script>
   <script>
     // Configure Tailwind
     tailwind.config = {
@@ -321,7 +364,7 @@
 </body>
 </html>`);
         previewDoc.close();
-j
+
         // Ensure Tailwind processes the content
         if (previewDoc.defaultView.tailwind) {
           setTimeout(() => {
@@ -351,233 +394,11 @@ j
       }, 300);
     });
     
-    // Copy code functionality
-    copyButton.addEventListener('click', () => {
-      const code = editor.getValue();
-      navigator.clipboard.writeText(code).then(() => {
-        notification.style.opacity = '1';
-        setTimeout(() => {
-          notification.style.opacity = '0';
-        }, 2000);
-      });
-    });
-    
-    // Save code functionality
-    saveButton.addEventListener('click', () => {
-      const code = editor.getValue();
-      const blob = new Blob([code], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'tailwind-code.html';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
-    
-    // Load example
-    loadExampleButton.addEventListener('click', () => {
-      const examples = [
-        // Example 1 - Simple Card
-        `<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-  <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-bold text-gray-800">Product Card</h2>
-      <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">New</span>
-    </div>
-    <img class="h-48 w-full object-cover rounded-md mb-4" src="https://www.nexus-svnit.in/static/media/nexus.989c35f8cf87c56920da.png" alt="Product image">
-    <h3 class="text-lg font-semibold text-gray-800 mb-2">Premium Headphones</h3>
-    <p class="text-gray-600 mb-4">Experience crystal clear audio with our premium noise-cancelling headphones.</p>
-    <div class="flex items-center justify-between">
-      <span class="text-2xl font-bold text-gray-800">$299</span>
-      <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">Add to Cart</button>
-    </div>
-  </div>
-</div>`,
-        // Example 2 - Login Form
-        `<div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-  <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-    <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
-      <p class="mt-2 text-center text-sm text-gray-600">
-        Or
-        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">start your 14-day free trial</a>
-      </p>
-    </div>
-    <form class="mt-8 space-y-6">
-      <div class="rounded-md shadow-sm space-y-4">
-        <div>
-          <label for="email-address" class="sr-only">Email address</label>
-          <input id="email-address" name="email" type="email" autocomplete="email" required
-            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Email address">
-        </div>
-        <div>
-          <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" required
-            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password">
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <input id="remember-me" name="remember-me" type="checkbox"
-            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-          <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-            Remember me
-          </label>
-        </div>
-
-        <div class="text-sm">
-          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
-            Forgot your password?
-          </a>
-        </div>
-      </div>
-
-      <div>
-        <button type="submit"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <!-- Heroicon name: solid/lock-closed -->
-            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-            </svg>
-          </span>
-          Sign in
-        </button>
-      </div>
-    </form>
-  </div>
-</div>`,
-        // Example 3 - Pricing Section
-        `<div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center">
-      <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-        Simple, transparent pricing
-      </h2>
-      <p class="mt-4 text-xl text-gray-600">
-        Choose the plan that best fits your needs
-      </p>
-    </div>
-
-    <div class="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
-      <!-- Basic Plan -->
-      <div class="border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Basic</h3>
-        <p class="mt-4 text-sm text-gray-500">All the essentials to get started quickly</p>
-        <p class="mt-8">
-          <span class="text-4xl font-extrabold text-gray-900">$9</span>
-          <span class="text-base font-medium text-gray-500">/mo</span>
-        </p>
-        <ul class="mt-6 space-y-4">
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">1 user</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">5GB storage</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">Community support</span>
-          </li>
-        </ul>
-        <button class="mt-8 block w-full bg-gray-800 border border-transparent rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">Buy Basic</button>
-      </div>
-
-      <!-- Pro Plan -->
-      <div class="border border-indigo-500 rounded-lg shadow-sm p-6 bg-white relative">
-        <span class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-4 py-1 text-sm rounded-full">Popular</span>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Pro</h3>
-        <p class="mt-4 text-sm text-gray-500">For professional individuals and small teams</p>
-        <p class="mt-8">
-          <span class="text-4xl font-extrabold text-gray-900">$29</span>
-          <span class="text-base font-medium text-gray-500">/mo</span>
-        </p>
-        <ul class="mt-6 space-y-4">
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">5 users</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">50GB storage</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">Priority support</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">Advanced features</span>
-          </li>
-        </ul>
-        <button class="mt-8 block w-full bg-indigo-600 border border-transparent rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-indigo-700">Buy Pro</button>
-      </div>
-
-      <!-- Enterprise Plan -->
-      <div class="border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Enterprise</h3>
-        <p class="mt-4 text-sm text-gray-500">For large teams and organizations</p>
-        <p class="mt-8">
-          <span class="text-4xl font-extrabold text-gray-900">$99</span>
-          <span class="text-base font-medium text-gray-500">/mo</span>
-        </p>
-        <ul class="mt-6 space-y-4">
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">Unlimited users</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">500GB storage</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">Dedicated support</span>
-          </li>
-          <li class="flex items-start">
-            <svg class="flex-shrink-0 h-6 w-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="ml-3 text-base text-gray-500">Custom integrations</span>
-          </li>
-        </ul>
-        <button class="mt-8 block w-full bg-gray-800 border border-transparent rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">Contact Sales</button>
-      </div>
-    </div>
-  </div>
-</div>`
-      ];
-      
-      const randomExample = examples[Math.floor(Math.random() * examples.length)];
-      editor.setValue(randomExample);
+    // Reset code functionality
+    resetButton.addEventListener('click', () => {
+      editor.setValue(initialCode);
       updatePreview();
+      localStorage.removeItem(storageKey);
     });
     
     // Handle local storage
@@ -588,6 +409,37 @@ j
     if (savedCode) {
       editor.setValue(savedCode);
     }
+
+    // Add popup functionality
+    const docsPopup = document.getElementById('docs-popup');
+    const showDocsButton = document.getElementById('show-docs');
+    const closeDocsButton = document.getElementById('close-docs');
+
+    showDocsButton.addEventListener('click', () => {
+      docsPopup.classList.remove('hidden');
+      docsPopup.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeDocsButton.addEventListener('click', () => {
+      docsPopup.classList.add('hidden');
+      docsPopup.classList.remove('flex');
+      document.body.style.overflow = '';
+    });
+
+    // Close popup when clicking outside
+    docsPopup.addEventListener('click', (e) => {
+      if (e.target === docsPopup) {
+        closeDocsButton.click();
+      }
+    });
+
+    // Add escape key support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !docsPopup.classList.contains('hidden')) {
+        closeDocsButton.click();
+      }
+    });
   </script>
 </body>
 </html>

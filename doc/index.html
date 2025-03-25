@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>tailwind-css-documentation.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="tailwind-css-documentation">Tailwind CSS Documentation</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#core-concepts">Core Concepts</a></li>
+<li><a href="#utility-classes">Utility Classes</a></li>
+<li><a href="#responsive-design">Responsive Design</a></li>
+<li><a href="#dark-mode">Dark Mode</a></li>
+<li><a href="#customization">Customization</a></li>
+<li><a href="#components">Components</a></li>
+<li><a href="#layout-patterns">Layout Patterns</a></li>
+<li><a href="#performance-optimization">Performance Optimization</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#resources">Resources</a></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>Tailwind CSS is a utility-first CSS framework that allows you to build modern websites without ever leaving your HTML. Unlike traditional frameworks like Bootstrap or Foundation, Tailwind doesn't provide pre-designed components. Instead, it gives you low-level utility classes that let you build completely custom designs.</p>
+<h3 id="key-benefits">Key Benefits</h3>
+<ul>
+<li><strong>Utility-First Approach</strong>: Apply styles directly in your markup for faster development</li>
+<li><strong>Highly Customizable</strong>: Tailor the framework to your design system</li>
+<li><strong>Responsive Design</strong>: Built-in responsive modifiers for different screen sizes</li>
+<li><strong>Component-Friendly</strong>: Extract reusable patterns with directives or component libraries</li>
+<li><strong>Modern Features</strong>: Support for dark mode, animations, transitions, and more</li>
+<li><strong>Performance Focused</strong>: Generates optimized CSS with PurgeCSS built-in</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="installation">Installation</h3>
+<p>There are several ways to install Tailwind CSS:</p>
+<p><strong>Option 1: Using npm</strong></p>
+<pre class="hljs"><code><div>npm install -D tailwindcss
+npx tailwindcss init
+</div></code></pre>
+<p><strong>Option 2: Using CDN (not recommended for production)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdn.tailwindcss.com"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h3 id="basic-configuration">Basic Configuration</h3>
+<p>Create a <code>tailwind.config.js</code> file:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('tailwindcss').Config}</span> </span>*/</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">content</span>: [
+    <span class="hljs-string">"./src/**/*.{html,js,jsx,ts,tsx}"</span>,
+  ],
+  <span class="hljs-attr">theme</span>: {
+    <span class="hljs-attr">extend</span>: {},
+  },
+  <span class="hljs-attr">plugins</span>: [],
+}
+</div></code></pre>
+<p>Create a CSS file that includes Tailwind's directives:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">/* src/input.css */</span>
+<span class="hljs-keyword">@tailwind</span> base;
+<span class="hljs-keyword">@tailwind</span> components;
+<span class="hljs-keyword">@tailwind</span> utilities;
+</div></code></pre>
+<p>Process your CSS with Tailwind CLI:</p>
+<pre class="hljs"><code><div>npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+</div></code></pre>
+<p>Link the output CSS file in your HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"viewport"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"width=device-width, initial-scale=1.0"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/dist/output.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-3xl font-bold text-blue-500"</span>&gt;</span>
+    Hello world!
+  <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<h2 id="core-concepts">Core Concepts</h2>
+<h3 id="utility-first-philosophy">Utility-First Philosophy</h3>
+<p>Tailwind's approach involves using small, single-purpose utility classes to build complex components:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">&lt;!-- Traditional CSS approach --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"chat-notification"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"chat-notification-logo-wrapper"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"chat-notification-logo"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/img/logo.svg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"ChitChat Logo"</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"chat-notification-content"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h4</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"chat-notification-title"</span>&gt;</span>ChitChat<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"chat-notification-message"</span>&gt;</span>You have a new message!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- Tailwind CSS approach --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"shrink-0"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"h-12 w-12"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/img/logo.svg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"ChitChat Logo"</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-xl font-medium text-black"</span>&gt;</span>ChitChat<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-gray-500"</span>&gt;</span>You have a new message!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h3 id="naming-convention">Naming Convention</h3>
+<p>Tailwind uses a predictable naming pattern:</p>
+<ul>
+<li><code>{property}-{value}</code> for most utilities</li>
+<li><code>{property}-{modifier}-{value}</code> for variants</li>
+<li><code>{breakpoint}:{property}-{value}</code> for responsive utilities</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><code>text-center</code>: Centers text</li>
+<li><code>bg-blue-500</code>: Sets background color to blue (500 intensity)</li>
+<li><code>hover:underline</code>: Applies underline on hover</li>
+<li><code>md:flex</code>: Applies flex display at medium screen size and above</li>
+</ul>
+<h2 id="utility-classes">Utility Classes</h2>
+<h3 id="typography">Typography</h3>
+<p>Control text appearance with utilities for font family, size, weight, color, and more:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"font-sans text-lg font-medium text-gray-800 leading-relaxed tracking-wide"</span>&gt;</span>
+  Beautifully styled text with Tailwind CSS
+<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<p>Key typography classes:</p>
+<ul>
+<li>Font family: <code>font-sans</code>, <code>font-serif</code>, <code>font-mono</code></li>
+<li>Font size: <code>text-xs</code>, <code>text-sm</code>, <code>text-base</code>, <code>text-lg</code>, <code>text-xl</code>, <code>text-2xl</code>...</li>
+<li>Font weight: <code>font-thin</code>, <code>font-light</code>, <code>font-normal</code>, <code>font-medium</code>, <code>font-bold</code>...</li>
+<li>Text color: <code>text-{color}-{shade}</code> (e.g., <code>text-blue-500</code>)</li>
+<li>Text alignment: <code>text-left</code>, <code>text-center</code>, <code>text-right</code>, <code>text-justify</code></li>
+<li>Line height: <code>leading-none</code>, <code>leading-tight</code>, <code>leading-normal</code>, <code>leading-relaxed</code>...</li>
+<li>Letter spacing: <code>tracking-tighter</code>, <code>tracking-tight</code>, <code>tracking-normal</code>, <code>tracking-wide</code>...</li>
+<li>Text decoration: <code>underline</code>, <code>line-through</code>, <code>no-underline</code></li>
+<li>Text transform: <code>uppercase</code>, <code>lowercase</code>, <code>capitalize</code>, <code>normal-case</code></li>
+</ul>
+<h3 id="colors">Colors</h3>
+<p>Tailwind provides a comprehensive color palette with various shades:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-blue-500 text-white p-4 border-2 border-blue-700"</span>&gt;</span>
+  A blue container with white text
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Colors can be applied to various properties:</p>
+<ul>
+<li>Background: <code>bg-{color}-{shade}</code></li>
+<li>Text: <code>text-{color}-{shade}</code></li>
+<li>Border: <code>border-{color}-{shade}</code></li>
+<li>Placeholder: <code>placeholder-{color}-{shade}</code></li>
+<li>Gradient: <code>from-{color}-{shade}</code>, <code>via-{color}-{shade}</code>, <code>to-{color}-{shade}</code></li>
+</ul>
+<p>Default color palette includes:</p>
+<ul>
+<li>Gray, Red, Yellow, Green, Blue, Indigo, Purple, Pink, and more</li>
+<li>Each color has shades from 50 (lightest) to 900 (darkest)</li>
+</ul>
+<h3 id="spacing-and-sizing">Spacing and Sizing</h3>
+<p>Control margins, padding, width, and height:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"m-4 p-6 w-1/2 h-32"</span>&gt;</span>
+  Element with margin, padding, width, and height
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Spacing scale applies to margin (<code>m-*</code>) and padding (<code>p-*</code>):</p>
+<ul>
+<li><code>m-0</code>, <code>m-0.5</code>, <code>m-1</code>, <code>m-1.5</code>, <code>m-2</code>, <code>m-2.5</code>, <code>m-3</code>, <code>m-3.5</code>, <code>m-4</code>...</li>
+<li>Can be directional: <code>mt-</code> (top), <code>mr-</code> (right), <code>mb-</code> (bottom), <code>ml-</code> (left), <code>mx-</code> (horizontal), <code>my-</code> (vertical)</li>
+</ul>
+<p>Width and height utilities:</p>
+<ul>
+<li>Fixed sizes: <code>w-0</code>, <code>w-px</code>, <code>w-1</code>, <code>w-2</code>...</li>
+<li>Percentages: <code>w-1/2</code>, <code>w-1/3</code>, <code>w-2/3</code>, <code>w-1/4</code>, <code>w-3/4</code>...</li>
+<li>Full viewport: <code>w-screen</code>, <code>h-screen</code></li>
+<li>Full element: <code>w-full</code>, <code>h-full</code></li>
+<li>Auto: <code>w-auto</code>, <code>h-auto</code></li>
+<li>Min/Max: <code>min-w-0</code>, <code>min-w-full</code>, <code>max-w-xs</code>, <code>max-w-sm</code>...</li>
+</ul>
+<h3 id="flexbox-and-grid">Flexbox and Grid</h3>
+<p>Powerful layout utilities for building complex interfaces:</p>
+<p><strong>Flexbox Example:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex flex-row items-center justify-between space-x-4"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Item 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Item 2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Item 3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Key flexbox utilities:</p>
+<ul>
+<li><code>flex</code>: Enable flexbox</li>
+<li><code>flex-row</code>, <code>flex-col</code>: Direction</li>
+<li><code>flex-wrap</code>, <code>flex-nowrap</code>: Wrapping behavior</li>
+<li><code>items-start</code>, <code>items-center</code>, <code>items-end</code>: Align items</li>
+<li><code>justify-start</code>, <code>justify-center</code>, <code>justify-end</code>, <code>justify-between</code>, <code>justify-around</code>: Justify content</li>
+<li><code>space-x-{size}</code>, <code>space-y-{size}</code>: Gap between items</li>
+</ul>
+<p><strong>Grid Example:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"grid grid-cols-3 gap-4"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 4<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 5<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Grid Item 6<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Key grid utilities:</p>
+<ul>
+<li><code>grid</code>: Enable grid</li>
+<li><code>grid-cols-{n}</code>: Number of columns</li>
+<li><code>grid-rows-{n}</code>: Number of rows</li>
+<li><code>gap-{size}</code>, <code>gap-x-{size}</code>, <code>gap-y-{size}</code>: Gap between items</li>
+<li><code>col-span-{n}</code>: Span n columns</li>
+<li><code>row-span-{n}</code>: Span n rows</li>
+<li><code>col-start-{n}</code>, <code>row-start-{n}</code>: Start position</li>
+</ul>
+<h3 id="positioning">Positioning</h3>
+<p>Control how elements are positioned:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"relative h-32 w-32 bg-gray-200"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"absolute top-0 right-0 h-16 w-16 bg-blue-500"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Positioning utilities:</p>
+<ul>
+<li><code>static</code>, <code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code></li>
+<li><code>top-{size}</code>, <code>right-{size}</code>, <code>bottom-{size}</code>, <code>left-{size}</code>: Position offsets</li>
+<li><code>z-{index}</code>: Z-index control</li>
+</ul>
+<h3 id="background-and-borders">Background and Borders</h3>
+<p>Style element backgrounds and borders:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-lg shadow-lg border border-purple-700"</span>&gt;</span>
+  Element with gradient background, rounded corners, shadow, and border
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Background utilities:</p>
+<ul>
+<li><code>bg-{color}-{shade}</code>: Background color</li>
+<li><code>bg-opacity-{percentage}</code>: Background opacity</li>
+<li><code>bg-gradient-to-{direction}</code>: Gradient direction</li>
+<li><code>from-{color}-{shade}</code>, <code>via-{color}-{shade}</code>, <code>to-{color}-{shade}</code>: Gradient colors</li>
+<li><code>bg-repeat</code>, <code>bg-no-repeat</code>, <code>bg-repeat-x</code>, <code>bg-repeat-y</code>: Background repeat</li>
+<li><code>bg-cover</code>, <code>bg-contain</code>: Background size</li>
+</ul>
+<p>Border utilities:</p>
+<ul>
+<li><code>border</code>, <code>border-{size}</code>: Border width</li>
+<li><code>border-{color}-{shade}</code>: Border color</li>
+<li><code>border-opacity-{percentage}</code>: Border opacity</li>
+<li><code>border-{side}</code>: Side-specific borders (top, right, bottom, left)</li>
+<li><code>rounded</code>, <code>rounded-{size}</code>: Border radius</li>
+<li><code>rounded-{position}</code>: Position-specific radius (tl, tr, bl, br)</li>
+</ul>
+<h3 id="effects">Effects</h3>
+<p>Add shadows, opacity, and other visual effects:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"shadow-xl opacity-75 blur-sm transition-all duration-300 ease-in-out hover:opacity-100 hover:blur-none"</span>&gt;</span>
+  Element with shadow, opacity, blur, and transition
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Effect utilities:</p>
+<ul>
+<li><code>shadow</code>, <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>: Box shadows</li>
+<li><code>opacity-{percentage}</code>: Element opacity</li>
+<li><code>blur-{amount}</code>, <code>brightness-{amount}</code>, <code>contrast-{amount}</code>: Filters</li>
+<li><code>transition</code>, <code>transition-{property}</code>: Enable transitions</li>
+<li><code>duration-{time}</code>: Transition duration</li>
+<li><code>ease-{timing}</code>: Transition timing function</li>
+</ul>
+<h2 id="responsive-design">Responsive Design</h2>
+<p>Tailwind makes responsive design intuitive with breakpoint prefixes:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6"</span>&gt;</span>
+  Responsive width element
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Default breakpoints:</p>
+<ul>
+<li><code>sm</code>: 640px and above</li>
+<li><code>md</code>: 768px and above</li>
+<li><code>lg</code>: 1024px and above</li>
+<li><code>xl</code>: 1280px and above</li>
+<li><code>2xl</code>: 1536px and above</li>
+</ul>
+<p>All utility classes can be prefixed with these breakpoints to apply at specific screen sizes.</p>
+<h3 id="mobile-first-approach">Mobile-First Approach</h3>
+<p>Tailwind uses a mobile-first approach, meaning:</p>
+<ul>
+<li>Unprefixed utilities apply to all screen sizes</li>
+<li>Prefixed utilities apply at their breakpoint and above</li>
+<li>To target only mobile, use utilities without breakpoint prefixes and override them at larger sizes</li>
+</ul>
+<h3 id="customizing-breakpoints">Customizing Breakpoints</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// tailwind.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">theme</span>: {
+    <span class="hljs-attr">screens</span>: {
+      <span class="hljs-string">'tablet'</span>: <span class="hljs-string">'640px'</span>,
+      <span class="hljs-string">'laptop'</span>: <span class="hljs-string">'1024px'</span>,
+      <span class="hljs-string">'desktop'</span>: <span class="hljs-string">'1280px'</span>,
+    },
+  },
+}
+</div></code></pre>
+<h2 id="dark-mode">Dark Mode</h2>
+<p>Tailwind provides built-in support for dark mode:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-white dark:bg-gray-800 text-gray-900 dark:text-white"</span>&gt;</span>
+  This element changes colors in dark mode
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h3 id="configuration">Configuration</h3>
+<p>Enable dark mode in your config:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// tailwind.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">darkMode</span>: <span class="hljs-string">'media'</span>, <span class="hljs-comment">// or 'class'</span>
+  <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<p>Options:</p>
+<ul>
+<li><code>'media'</code>: Uses the operating system preference via <code>@media (prefers-color-scheme: dark)</code></li>
+<li><code>'class'</code>: Manually toggle by adding the <code>dark</code> class to the <code>html</code> element</li>
+</ul>
+<h3 id="best-practices-for-dark-mode">Best Practices for Dark Mode</h3>
+<ol>
+<li>Use semantic color names in config (e.g., <code>primary</code>, <code>secondary</code>) rather than specific colors</li>
+<li>Test both light and dark modes during development</li>
+<li>Consider accessibility and contrast in both modes</li>
+<li>Create reusable components that handle both modes consistently</li>
+</ol>
+<h2 id="customization">Customization</h2>
+<p>Tailwind is designed to be customized to match your design system.</p>
+<h3 id="configuration-file">Configuration File</h3>
+<p>Modify the <code>tailwind.config.js</code> file to customize:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">content</span>: [
+    <span class="hljs-string">'./src/**/*.{html,js,jsx,ts,tsx}'</span>,
+  ],
+  <span class="hljs-attr">theme</span>: {
+    <span class="hljs-attr">colors</span>: {
+      <span class="hljs-attr">primary</span>: <span class="hljs-string">'#FF6363'</span>,
+      <span class="hljs-attr">secondary</span>: <span class="hljs-string">'#6B7280'</span>,
+      <span class="hljs-comment">// ...</span>
+    },
+    <span class="hljs-attr">extend</span>: {
+      <span class="hljs-attr">spacing</span>: {
+        <span class="hljs-string">'128'</span>: <span class="hljs-string">'32rem'</span>,
+        <span class="hljs-string">'144'</span>: <span class="hljs-string">'36rem'</span>,
+      },
+      <span class="hljs-attr">borderRadius</span>: {
+        <span class="hljs-string">'4xl'</span>: <span class="hljs-string">'2rem'</span>,
+      },
+      <span class="hljs-attr">fontFamily</span>: {
+        <span class="hljs-attr">heading</span>: [<span class="hljs-string">'Montserrat'</span>, <span class="hljs-string">'sans-serif'</span>],
+        <span class="hljs-attr">body</span>: [<span class="hljs-string">'Open Sans'</span>, <span class="hljs-string">'sans-serif'</span>],
+      },
+    },
+  },
+  <span class="hljs-attr">plugins</span>: [
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'@tailwindcss/forms'</span>),
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'@tailwindcss/typography'</span>),
+  ],
+}
+</div></code></pre>
+<h3 id="extending-vs-overriding">Extending vs. Overriding</h3>
+<ul>
+<li>Using <code>extend</code> adds to the default theme</li>
+<li>Setting properties directly (outside <code>extend</code>) replaces the defaults</li>
+<li>Consider extending first before completely replacing defaults</li>
+</ul>
+<h3 id="custom-utilities">Custom Utilities</h3>
+<p>Create custom utilities using the <code>@layer</code> directive:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">@layer</span> utilities {
+  <span class="hljs-selector-class">.text-shadow</span> {
+    <span class="hljs-attribute">text-shadow</span>: <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">4px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.5</span>);
+  }
+  <span class="hljs-selector-class">.clip-path-triangle</span> {
+    <span class="hljs-attribute">clip-path</span>: <span class="hljs-built_in">polygon</span>(<span class="hljs-number">50%</span> <span class="hljs-number">0%</span>, <span class="hljs-number">0%</span> <span class="hljs-number">100%</span>, <span class="hljs-number">100%</span> <span class="hljs-number">100%</span>);
+  }
+}
+</div></code></pre>
+<h3 id="custom-variants">Custom Variants</h3>
+<p>Create custom variants with plugins:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// tailwind.config.js</span>
+<span class="hljs-keyword">const</span> plugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tailwindcss/plugin'</span>)
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-attr">plugins</span>: [
+    plugin(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">{ addVariant }</span>) </span>{
+      addVariant(<span class="hljs-string">'optional'</span>, <span class="hljs-string">'&amp;:optional'</span>)
+      addVariant(<span class="hljs-string">'group-optional'</span>, <span class="hljs-string">':merge(.group):optional &amp;'</span>)
+    })
+  ],
+}
+</div></code></pre>
+<h3 id="recommended-plugins">Recommended Plugins</h3>
+<ul>
+<li><code>@tailwindcss/forms</code>: Better form styles</li>
+<li><code>@tailwindcss/typography</code>: Rich text formatting</li>
+<li><code>@tailwindcss/aspect-ratio</code>: Aspect ratio utilities</li>
+<li><code>@tailwindcss/line-clamp</code>: Text truncation utilities</li>
+</ul>
+<h2 id="components">Components</h2>
+<p>While Tailwind is utility-first, there are several ways to create reusable components.</p>
+<h3 id="component-extraction">Component Extraction</h3>
+<h4 id="using-apply">Using @apply</h4>
+<p>Extract repeated utility patterns with the <code>@apply</code> directive:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">@layer</span> components {
+  <span class="hljs-selector-class">.btn-primary</span> {
+    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md <span class="hljs-attribute">hover</span>:bg-blue-<span class="hljs-number">700</span> focus:outline-none focus:ring-<span class="hljs-number">2</span> focus:ring-blue-<span class="hljs-number">400</span> focus:ring-opacity-<span class="hljs-number">75</span>;
+  }
+}
+</div></code></pre>
+<h4 id="using-javascript-components">Using JavaScript Components</h4>
+<p>For frameworks like React, Vue, or Angular, create component abstractions:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// React component example</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Button</span>(<span class="hljs-params">{ type = <span class="hljs-string">'primary'</span>, children }</span>) </span>{
+  <span class="hljs-keyword">const</span> styles = {
+    <span class="hljs-attr">primary</span>: <span class="hljs-string">'py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700'</span>,
+    <span class="hljs-attr">secondary</span>: <span class="hljs-string">'py-2 px-4 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-300'</span>,
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{styles[type]}</span>&gt;</span>
+      {children}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="component-libraries">Component Libraries</h3>
+<p>Consider using existing component libraries built with Tailwind:</p>
+<ul>
+<li><strong>Tailwind UI</strong>: Official premium component library</li>
+<li><strong>DaisyUI</strong>: Free component library with themes</li>
+<li><strong>Headless UI</strong>: Unstyled, accessible components designed for Tailwind</li>
+<li><strong>Flowbite</strong>: Open-source component library</li>
+</ul>
+<h2 id="layout-patterns">Layout Patterns</h2>
+<p>Common UI patterns implemented with Tailwind.</p>
+<h3 id="responsive-navigation">Responsive Navigation</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">nav</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-gray-800 p-4"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container mx-auto flex flex-wrap items-center justify-between"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- Logo --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex items-center flex-shrink-0 text-white mr-6"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"font-semibold text-xl tracking-tight"</span>&gt;</span>Logo<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    
+    <span class="hljs-comment">&lt;!-- Mobile menu button --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block lg:hidden"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"nav-toggle"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fill-current h-3 w-3"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 20 20"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    
+    <span class="hljs-comment">&lt;!-- Desktop menu --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"nav-content"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full hidden flex-grow lg:flex lg:items-center lg:w-auto"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-sm lg:flex-grow"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"</span>&gt;</span>
+          Home
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"</span>&gt;</span>
+          Features
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white"</span>&gt;</span>
+          About
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0"</span>&gt;</span>Sign Up<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
+</div></code></pre>
+<h3 id="card-layout">Card Layout</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"max-w-sm rounded overflow-hidden shadow-lg"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/img/card-top.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"Card image"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"px-6 py-4"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"font-bold text-xl mb-2"</span>&gt;</span>Card Title<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-gray-700 text-base"</span>&gt;</span>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae justo in purus hendrerit fermentum.
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"px-6 pt-4 pb-2"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"</span>&gt;</span>#tag1<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"</span>&gt;</span>#tag2<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h3 id="hero-section">Hero Section</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"relative pt-16 pb-32 flex content-center items-center justify-center"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"min-height: 75vh;"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"absolute top-0 w-full h-full bg-center bg-cover"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1267&amp;q=80');"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full h-full absolute opacity-75 bg-black"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container relative mx-auto"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"items-center flex flex-wrap"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full lg:w-6/12 px-4 ml-auto mr-auto text-center"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"pr-12"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-white font-semibold text-5xl"</span>&gt;</span>
+            Your story starts with us.
+          <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-4 text-lg text-gray-300"</span>&gt;</span>
+            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+          <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-8 inline-block px-6 py-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg"</span>&gt;</span>
+            Get Started
+          <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h3 id="modal">Modal</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"modal"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-3 text-center"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"h-6 w-6 text-green-600"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">"currentColor"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">stroke-linecap</span>=<span class="hljs-string">"round"</span> <span class="hljs-attr">stroke-linejoin</span>=<span class="hljs-string">"round"</span> <span class="hljs-attr">stroke-width</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M5 13l4 4L19 7"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">path</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-lg leading-6 font-medium text-gray-900"</span>&gt;</span>Successful!<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mt-2 px-7 py-3"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-sm text-gray-500"</span>&gt;</span>
+          Your account has been successfully created!
+        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"items-center px-4 py-3"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"close-modal"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300"</span>&gt;</span>
+          OK
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h3 id="form-layout">Form Layout</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-full max-w-md mx-auto"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mb-4"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block text-gray-700 text-sm font-bold mb-2"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>&gt;</span>
+        Username
+      <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"username"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Username"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mb-6"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"block text-gray-700 text-sm font-bold mb-2"</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"password"</span>&gt;</span>
+        Password
+      <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"******************"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-red-500 text-xs italic"</span>&gt;</span>Please choose a password.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex items-center justify-between"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"button"</span>&gt;</span>
+        Sign In
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>&gt;</span>
+        Forgot Password?
+      <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<p>Tailwind can generate large CSS files if not properly optimized. Here's how to optimize performance:</p>
+<h3 id="purgecss-integration">PurgeCSS Integration</h3>
+<p>Tailwind v3.0+ automatically removes unused CSS with its built-in PurgeCSS integration. Configure the <code>content</code> option to include all files containing class names:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// tailwind.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">content</span>: [
+    <span class="hljs-string">'./src/**/*.{html,js,jsx,ts,tsx,vue}'</span>,
+  ],
+  <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<h3 id="just-in-time-jit-mode">Just-in-Time (JIT) Mode</h3>
+<p>Tailwind v3.0+ uses JIT mode by default, which:</p>
+<ul>
+<li>Only generates the CSS you're actually using</li>
+<li>Provides faster build times</li>
+<li>Allows for on-demand generation of variants</li>
+<li>Enables arbitrary values (e.g., <code>text-[16px]</code>, <code>bg-[#bada55]</code>)</li>
+</ul>
+<h3 id="minification">Minification</h3>
+<p>Use a minifier like CSSNano in your build process:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// postcss.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">plugins</span>: {
+    <span class="hljs-attr">tailwindcss</span>: {},
+    <span class="hljs-attr">autoprefixer</span>: {},
+    ...(process.env.NODE_ENV === <span class="hljs-string">'production'</span> ? { <span class="hljs-attr">cssnano</span>: {} } : {})
+  }
+}
+</div></code></pre>
+<h3 id="splitting-configuration">Splitting Configuration</h3>
+<p>For large projects, consider splitting your configuration:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// tailwind.config.js</span>
+<span class="hljs-keyword">const</span> colors = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tailwind/colors'</span>)
+<span class="hljs-keyword">const</span> spacing = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tailwind/spacing'</span>)
+<span class="hljs-keyword">const</span> typography = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tailwind/typography'</span>)
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">content</span>: [<span class="hljs-string">'./src/**/*.{html,js}'</span>],
+  <span class="hljs-attr">theme</span>: {
+    colors,
+    spacing,
+    <span class="hljs-attr">extend</span>: {
+      typography,
+    },
+  },
+  <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="component-first-approach">Component-First Approach</h3>
+<p>While Tailwind is utility-first, for maintainable code:</p>
+<ol>
+<li>Start with utilities for rapid prototyping</li>
+<li>Identify repeated patterns</li>
+<li>Extract components using <code>@apply</code> or component frameworks</li>
+<li>Maintain a consistent design system</li>
+</ol>
+<h3 id="naming-conventions">Naming Conventions</h3>
+<p>For custom components and utilities:</p>
+<ul>
+<li>Use kebab-case for class names: <code>btn-primary</code>, not <code>btnPrimary</code></li>
+<li>Use descriptive, purpose-oriented names: <code>card-title</code> instead of <code>large-bold-text</code></li>
+<li>Namespace custom utilities: <code>custom-text-shadow</code> instead of just <code>text-shadow</code></li>
+</ul>
+<h3 id="file-organization">File Organization</h3>
+<p>Structure your CSS files:</p>
+<pre class="hljs"><code><div>src/
+├── css/
+│   ├── main.css             # Import directives and global styles
+│   ├── components/          # Component styles using @apply
+│   │   ├── buttons.css
+│   │   ├── cards.css
+│   │   └── forms.css
+│   └── utilities/           # Custom utilities
+│       ├── text.css
+│       └── animations.css
+</div></code></pre>
+<h3 id="responsive-design-tips">Responsive Design Tips</h3>
+<ol>
+<li>Design for mobile first, then expand to larger screens</li>
+<li>Use consistent breakpoints throughout your application</li>
+<li>Don't overuse responsive prefixes; group similar responsive behaviors together</li>
+<li>Test on actual devices, not just browser resizing</li>
+</ol>
+<h3 id="accessibility-considerations">Accessibility Considerations</h3>
+<ol>
+<li>Maintain sufficient color contrast (4.5:1 minimum)</li>
+<li>Use semantic HTML elements</li>
+<li>Ensure focus states are visible: <code>focus:ring focus:ring-blue-300</code></li>
+<li>Provide appropriate text alternatives for non-text content</li>
+<li>Test with screen readers and keyboard navigation</li>
+</ol>
+<h3 id="common-pitfalls-to-avoid">Common Pitfalls to Avoid</h3>
+<ol>
+<li><strong>Class Name Soup</strong>: Avoid extremely long strings of utility classes. Extract to components when it becomes unwieldy.</li>
+<li><strong>Inconsistent Designs</strong>: Create a design system and stick to it.</li>
+<li><strong>Specificity Issues</strong>: Be cautious when mixing Tailwind with custom CSS.</li>
+<li><strong>Over-customization</strong>: Don't modify the default configuration too early.</li>
+<li><strong>Neglecting Dark Mode</strong>: Design for both light and dark themes from the start.</li>
+</ol>
+<h2 id="resources">Resources</h2>
+<h3 id="official-resources">Official Resources</h3>
+<ul>
+<li><a href="https://tailwindcss.com/docs">Tailwind CSS Documentation</a></li>
+<li><a href="https://tailwindui.com">Tailwind UI</a> (Premium component library)</li>
+<li><a href="https://play.tailwindcss.com">Tailwind CSS Play</a> (Online playground)</li>
+<li><a href="https://github.com/tailwindlabs/tailwindcss">Tailwind CSS GitHub Repository</a></li>
+</ul>
+<h3 id="community-resources">Community Resources</h3>
+<ul>
+<li><a href="https://github.com/aniftyco/awesome-tailwindcss">Awesome Tailwind CSS</a> (A curated list of resources)</li>
+<li><a href="https://tailwindcomponents.com">Tailwind Components</a> (Community components)</li>
+<li><a href="https://daisyui.com">DaisyUI</a> (Component library built on Tailwind)</li>
+<li><a href="https://headlessui.dev">Headless UI</a> (Unstyled, accessible components)</li>
+<li><a href="https://www.tailwindtoolbox.com">Tailwind Toolbox</a> (Templates and components)</li>
+</ul>
+
+</body>
+</html>
