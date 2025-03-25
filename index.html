@@ -208,7 +208,6 @@
       extraKeys: {
         // VS Code-like shortcuts
         'Ctrl-/': 'toggleComment',
-        'Ctrl-Space': 'autocomplete',
         'Ctrl-S': (cm) => {
           saveButton.click();
           return false;
@@ -253,29 +252,6 @@
         'Shift-Tab': (cm) => {
           cm.execCommand('indentLess');
         }
-      },
-      hintOptions: {
-        completeSingle: false,
-        schemaInfo: {
-          'div': {
-            attrs: {
-              'class': null,
-              'id': null
-            }
-          },
-          'button': {
-            attrs: {
-              'class': null,
-              'type': ['button', 'submit', 'reset']
-            }
-          },
-          'input': {
-            attrs: {
-              'class': null,
-              'type': ['text', 'password', 'email', 'number', 'submit', 'reset', 'button', 'checkbox', 'radio']
-            }
-          }
-        }
       }
     });
 
@@ -291,7 +267,6 @@
         </button>
         <div class="font-bold mb-2">Keyboard Shortcuts:</div>
         <div>Ctrl + / : Toggle Comment</div>
-        <div>Ctrl + Space : Auto-complete</div>
         <div>Ctrl + S : Save</div>
         <div>Ctrl + D : Multi-select</div>
         <div>Alt + ↑/↓ : Move line</div>
